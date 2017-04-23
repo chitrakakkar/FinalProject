@@ -33,7 +33,7 @@ function addTasksToPage(tasks)
     }
 
 }
-//dynamically creating html element for the travel-list
+//dynamically creating html element for the task-list
 function add_task_to_webPage(task, parent)
 {
     console.log("I am  the final task "+JSON.stringify(task));
@@ -83,7 +83,6 @@ function addNewTask_AjaxCall(task){
     });
 
 }
-
 // gets id from /delete route in index.js
 function deletePlace(id)
 {
