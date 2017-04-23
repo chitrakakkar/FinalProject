@@ -13,7 +13,7 @@ router.get('/', function(req, res, next)
       return next(err)
     }
     else {
-      return res.render('index', {title: 'TO DO List', places: taskDocs}); // placesdocs contains all object items
+      return res.render('index', {title: 'TO DO List', places: taskDocs}); // tasksDocs contains all object items
     }
   });
 
@@ -57,9 +57,7 @@ router.post('/add', function(req, res, next)
       res.send("Duplicate Entry");
 
     }
-
   });
-
 });
 
 module.exports = router;

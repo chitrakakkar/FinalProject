@@ -13,7 +13,8 @@ var users = require('./routes/users');
 var app = express();
 
 //var mongo_pw = process.env.Mongo_PW;
-var url = 'mongodb://localhost:27017/TODO';
+var url = 'mongodb://localhost:27017/Tasks';
+
 
 MongoClient.connect(url, function (err, db)
 {
@@ -44,18 +45,14 @@ MongoClient.connect(url, function (err, db)
     {
         req.db = db;
         next();
-
     });
-
     app.use('/', index);
-
 // catch 404 and forward to error handler
     app.use(function (req, res, next) {
         var err = new Error('Not Found');
         err.status = 404;
         next(err);
     });
-
 // error handler
     app.use(function (err, req, res, next) {
         // set locals, only providing error in development
@@ -67,5 +64,4 @@ MongoClient.connect(url, function (err, db)
         res.render('error');
     });
 });
-
 module.exports = app;
