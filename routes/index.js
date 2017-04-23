@@ -60,10 +60,10 @@ router.post('/add', function(req, res, next)
   });
 });
 
-router.post('/deleteTask', function (req, res, next)
+router.post('/delete', function (req, res, next)
 {
     console.log(req.body);// reg.body has all the data
-    req.db.collection('tasks').deleteOne({'name':req.body.name},function (err)
+    req.db.collection('tasks').deleteOne({'_id':req.body._id},function (err)
     {
         if (err)
         {
@@ -71,7 +71,5 @@ router.post('/deleteTask', function (req, res, next)
         }
         return res.render('delete_task.hbs',{'tasks': req.body} ); // directs to delete-page
     });
-
 });
-
 module.exports = router;
