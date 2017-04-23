@@ -31,7 +31,8 @@ function add_task(task, parent)
 {
     console.log("I am  the final task "+JSON.stringify(task));
     console.log("Id" + task._id);
-    var html = '<div id="' + task._id + '"><span class="taskName">' + task.name + '</span><button class="edit">Edit</button><button class="delete">Delete</button><button class="Done">Done</button> ';
+    var html = '<div id="' + task._id + '"><span class="taskName">' + task.name + '</span><button class="edit">Edit</button><button class="delete">Delete</button>' +
+        '<button class="Done">Done</button><button class="Done">Starred</button> ';
     parent.append(html);
 }
 
