@@ -34,7 +34,6 @@ MongoClient.connect(url, function (err, db)
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'public')));
 
-    app.use('/', index);
     app.use('/users', users);
 // add app.use() call to add the db to each request
 
