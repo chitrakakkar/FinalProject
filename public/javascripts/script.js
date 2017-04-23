@@ -23,6 +23,7 @@ function addTasksToPage(tasks)
     {
         addNewTask(tasks[i], parent);
     }
+    $('.delete').click(deleteListener);
 
 }
 
@@ -31,9 +32,15 @@ function add_task(task, parent)
 {
     console.log("I am  the final task "+JSON.stringify(task));
     console.log("Id" + task._id);
-    var html = '<div id="' + task._id + '"><span class="taskName">' + task.name + '</span><button class="edit">Edit</button><button class="delete">Delete</button>' +
+    var html = '<div id="' + task._id + '"><span class="taskName">' + task.name + '</span><button class="edit">Edit</button><button id=" + task._id + " class="delete">Delete</button>' +
         '<button class="Done">Done</button><button class="Done">Starred</button> ';
     parent.append(html);
+}
+// Listener functions
+function deleteListener()
+{
+    var task_id = $(this).attr('id');
+    deletePlace(task_id);                          // Make AJAX request to delete the place with this ID
 }
 
 
@@ -76,4 +83,25 @@ function addNewTask(task){
         console.log(error);
     });
 
+}
+
+// gets id from /delete route in index.js
+function deletePlace(id)
+{
+    $.ajax({
+        method: "DELETE",
+        url: "/delete",
+        data: { "id": id }
+    }).done(function (data) {
+        console.log('DELETE complete');
+        // Select div containing this item, and remove from page
+        var selector_id = '#' + data.id + "";
+        $(selector_id).fadeOut(function()
+        {
+            $(this).remove();
+        });
+    }).fail(function (error) {
+        console.log('DELETE error');
+        console.log(error);
+    });
 }
