@@ -17,7 +17,7 @@ function delete_Task()
 {
     $(".delete").click(function()
     {
-       var task_id=$(this).attr('id');
+       var task_id=$(this).attr('id'); // this has the task_id
         delete_Task_Ajax(task_id);
     });
 }
