@@ -18,7 +18,7 @@ var TaskSchema = new mongoose.Schema({
                 }, message:'{VALUE} is not a valid task date.Date must be in past'
             }
         },
-    completed:Boolean
+    done:Boolean
 });
 // mongoose.model turns it into a Run object - uppercase first letter
 var Task = mongoose.model('Task', TaskSchema);

@@ -7,7 +7,7 @@ var Task = require('../models/task.js'); // grabs schema from the task.js;no mor
 router.get('/', function(req, res, next)
 {
   //.find() gets all the documents inside a collection
-  Task.find().toArray(function (err, taskDocs)
+  req.db.collection('tasks').find().toArray(function (err, taskDocs)
   {
     console.log("Check me",taskDocs);
     if (err) {
@@ -23,7 +23,7 @@ router.get('/', function(req, res, next)
 /* GET all items home page. */
 router.get('/all', function(req, res)
 {
-  Task.find().toArray(function (err, taskDocs)
+  req.db.collection('tasks').find().toArray(function (err, taskDocs)
   {
     console.log(taskDocs);
     res.json(taskDocs); // returns Json object
@@ -35,7 +35,7 @@ router.post('/add', function(req, res, next)
     console.log("I am the body", req.body);
   //var counter= req.db.collection('places').find().count();
   // gives a total number if any place already exists
- Task.find({'name':req.body.name}).toArray( function (err, doc)
+  req.db.collection('tasks').find({'name':req.body.name}).toArray( function (err, doc)
   {
     console.log("I am the name", req.body.name);
 
@@ -59,21 +59,23 @@ router.post('/add', function(req, res, next)
     }
   });
 });
-// router grabs the complated task from the mongoose database
+// router grabs the completed task from the mongoose database
 router.get('/completed', function (req, res,next )
 {
-    Task.find({completed:true},function(err, tasks) {
+    Task.find({done:true},function(err, tasks)
+    {
         if (err) {
             return next(err);
         }
-        res.render('tasks_completed', {title: 'Completed Tasks', tasks: tasks});
+        res.render('done_tasks', {title: 'Completed Tasks', tasks: tasks});
     })
 
 });
+//delete a task;
 router.post('/delete', function (req, res, next)
 {
     console.log(req.body);// reg.body has all the data
-    Task.remove({'_id':req.body._id},function (err)
+    req.db.collection('tasks').deleteOne({'_id':req.body._id},function (err)
     {
         if (err)
         {
