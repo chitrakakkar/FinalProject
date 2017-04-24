@@ -3,7 +3,7 @@ $(function()
     // Add a listener for input text; listen for Enter key.
     // Send POST request to create new task
     getAllTasks(); // calls /all url in index.js and displays all the data;line 92 on this page;
-    delete_Task();
+
 });
 function addNewTaskForm()
 {
@@ -30,6 +30,7 @@ function addTasksToPage(tasks)
     {
         add_task_to_webPage(tasks[i], parent);
     }
+    delete_Task();
 
 }
 //dynamically creating html element for the task-list
@@ -37,9 +38,11 @@ function add_task_to_webPage(task, parent)
 {
     console.log("I am  the final task "+JSON.stringify(task));
     console.log("Id" + task._id);
-    var html = '<div id="' + task._id + '"><span class="taskName">' + task.name + '</span><button id="' + task._id + '" class="edit">Edit</button><button id="' + task._id + '" class="delete">Delete</button>' +
-        '<button id="' + task._id + '" class="Done">Done</button><button id="' + task._id + '" class="Done">Starred</button></div> ';
+    var html = '<div id="' + task._id + '" class="task-list"><span class="taskName">' + task.name + '</span><button id="' + task._id + '" class="edit">Edit</button><button id="' + task._id + '" class="delete">Delete</button>' +
+        '<button id="' + task._id + '" class="Done">Done</button><button id="' + task._id + '" class="Done">Star</button></div> ';
     parent.append(html);
+
+
 }
 
 // These functions make AJAX calls
@@ -69,7 +72,7 @@ function addNewTask_AjaxCall(task)
         data: { "name" : task }
     }).done(function(data)
     {
-        console.log("I am the data" + task);
+        console.log("I am the data " + task);
 
         console.log('POST complete');
 
@@ -85,16 +88,17 @@ function addNewTask_AjaxCall(task)
 }
 function delete_Task_Ajax(id)
 {
+
     $.ajax({
-        method: "DELETE",
+        method: "POST",
         url: "/delete",
-        data: { "id": id }  // gets id from /delete route in index.js
-    }).done(function (data)
+        data: { "id": id }  // sends id to /delete route in index.js
+    }).done(function (data) // data has the result after deleting the task;
     {
         console.log('DELETE complete');
         // Select div containing this item, and remove from page
-        var selector_id = '#' + data.id + "";
-        $(selector_id).fadeOut(function()
+        var div_id = '#' + id + "";
+        $(div_id).fadeOut(function()
         {
             $(this).remove();
         });

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var ObjectID = require('mongodb').ObjectID;
 var Task = require('../models/task.js'); // grabs schema from the task.js;no more db.collection
 
 
@@ -74,8 +75,8 @@ router.get('/completed', function (req, res,next )
 //delete a task;
 router.post('/delete', function (req, res, next)
 {
-    console.log(req.body);// reg.body has all the data
-    req.db.collection('tasks').deleteOne({'_id':req.body._id},function (err)
+    // req.body has id ;not _id;
+    req.db.collection('tasks').deleteOne({'_id':ObjectID(req.body.id)},function (err)
     {
         if (err)
         {
@@ -84,4 +85,5 @@ router.post('/delete', function (req, res, next)
         return res.render('delete_task.hbs',{'tasks': req.body} ); // directs to delete-page
     });
 });
+
 module.exports = router;
