@@ -3,7 +3,7 @@ $(function()
     // Add a listener for input text; listen for Enter key.
     // Send POST request to create new task
     getAllTasks(); // calls /all url in index.js and displays all the data;line 92 on this page;
-
+    delete_Task();
 });
 function addNewTaskForm()
 {
@@ -13,13 +13,12 @@ function addNewTaskForm()
         addNewTask_AjaxCall(Task_name);
     });
 }
-function deleteTask()
+function delete_Task()
 {
-    $(".delete").click(function(event)
+    $(".delete").click(function()
     {
-        var task_id = $(this).attr('id');
-        deletePlace(task_id);
-
+       var task_id=$(this).attr('id');
+        delete_Task_Ajax(task_id);
     });
 }
 
@@ -38,8 +37,8 @@ function add_task_to_webPage(task, parent)
 {
     console.log("I am  the final task "+JSON.stringify(task));
     console.log("Id" + task._id);
-    var html = '<div id="' + task._id + '"><span class="taskName">' + task.name + '</span><button class="edit">Edit</button><button id=" + task._id + " class="delete">Delete</button>' +
-        '<button class="Done">Done</button><button class="Done">Starred</button> ';
+    var html = '<div id="' + task._id + '"><span class="taskName">' + task.name + '</span><button class="edit">Edit</button><button id="' + task._id + '" class="delete">Delete</button>' +
+        '<button id="' + task._id + '" class="Done">Done</button><button id="' + task._id + '" class="Done">Starred</button></div> ';
     parent.append(html);
 }
 
@@ -62,7 +61,8 @@ function getAllTasks()
     });
 }
 //adds new task-gets info from index.js-/add router
-function addNewTask_AjaxCall(task){
+function addNewTask_AjaxCall(task)
+{
     $.ajax({
         method:"POST",
         url:"/add",
@@ -75,21 +75,20 @@ function addNewTask_AjaxCall(task){
 
         $('#new_task_text').val('');        // Clear input text box
 
-        var parent = $('#task_list');
-        add_task(data, parent);
+        var task_list = $('#task_list');
+        add_task_to_webPage(data, task_list); // data gets data from the database;
     }).fail(function(error){
         console.log('POST Error');
         console.log(error);
     });
 
 }
-// gets id from /delete route in index.js
-function deletePlace(id)
+function delete_Task_Ajax(id)
 {
     $.ajax({
         method: "DELETE",
         url: "/delete",
-        data: { "id": id }
+        data: { "id": id }  // gets id from /delete route in index.js
     }).done(function (data)
     {
         console.log('DELETE complete');
@@ -99,7 +98,6 @@ function deletePlace(id)
         {
             $(this).remove();
         });
-        deleteTask(); // delete the task from the web-page
     }).fail(function (error) {
         console.log('DELETE error');
         console.log(error);
