@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-/* Represents a Task data:-a name, and a date task is assigned; */
+/* Represents a Task data:-a name, a date task is assigned and completed boolean; */
 var TaskSchema = new mongoose.Schema({
     name : { type: String,
         required: true,
@@ -17,7 +17,8 @@ var TaskSchema = new mongoose.Schema({
                     return (date <Date.now());
                 }, message:'{VALUE} is not a valid task date.Date must be in past'
             }
-        }
+        },
+    completed:Boolean
 });
 // mongoose.model turns it into a Run object - uppercase first letter
 var Task = mongoose.model('Task', TaskSchema);
