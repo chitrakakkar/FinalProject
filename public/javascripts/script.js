@@ -1,5 +1,7 @@
 $(function()
 {
+
+    $("head").append('<script type="text/javascript" src="../javascripts/jquery.jeditable.js"></script>');
     // Add a listener for input text; listen for Enter key.
     // Send POST request to create new task
     getAllTasks(); // calls /all url in index.js and displays all the data;line 92 on this page;
@@ -14,47 +16,51 @@ function addNewTaskForm()
     });
 }
 
-function delete_Task()
-{
-    $(".delete").click(function()
-    {
-       var task_id=$(this).attr('id'); // this has the task_id
-        delete_Task_Ajax(task_id);
-    });
-}
 
-function Edit_task()
-{
-    $(".edit").click(function(){
-        $(".taskName").attr('contentEditable',true);}).blur(function()
-    {
-        $(this).attr('contentEditable', false); });
-        var new_text=$('.taskName').val();
-        Edit_task_Ajax(new_text);
 
-}
+// function Edit_task()
+// {
+//$(this).text("Save");
+//$(".taskName").attr('contentEditable',true);
+//     $(".edit").click(function(){
+//         $(".taskName").attr('contentEditable',true);}).blur(function()
+//     {
+//         $(this).attr('contentEditable', false); });
+//         var new_text=$('.taskName').val();
+//         Edit_task_Ajax(new_text);
+//
+// }
 
 // Create elements for the html page
 function addTasksToPage(tasks)
 {
-    var parent = $('#task_list');
+    var task_list = $('#task_list');
     for (var i = 0 ; i < tasks.length ; i++)
     {
-        add_task_to_webPage(tasks[i], parent);
+        add_task_to_webPage(tasks[i], task_list);
     }
-    delete_Task();
-    Edit_task();
-
 
 }
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
-    var html = '<div id="' + task._id + '" class="task-list"><span class="taskName">' + task.name + '</span><button id="' + task._id + '" class="edit">Edit</button><button id="' + task._id + '" class="delete">Delete</button>' +
-        '<button id="' + task._id + '" class="Done">Done</button><button id="' + task._id + '" class="Done">Star</button></div> ';
-    task_list.append(html);
+    var task = $('<div id="' + task._id + '" class="task-list"><span class="taskName">' + task.name + '</span><button id="' + task._id + '" class="edit">Edit</button><button id="' + task._id + '" class="delete">Delete</button>' +
+        '<button id="' + task._id + '" class="Done">Done</button><button id="' + task._id + '" class="Done">Star</button></div> ');
+    $("button.delete" , task).click(function ()
+    {
+        delete_Task_Ajax($(this).attr('id'));
 
-
+    });
+    $("button.edit", task).click(function ()
+    {
+        $(this).text("Save");
+        $('.taskName').editable('/edit',
+            {
+            type      : 'textarea',
+            tooltip   : 'Click to edit...'
+        });
+    });
+   task_list.append(task);
 }
 
 // These functions make AJAX calls
