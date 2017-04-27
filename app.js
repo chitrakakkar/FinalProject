@@ -49,13 +49,15 @@ MongoClient.connect(url, function (err, db)
     });
     app.use('/', index);
 // catch 404 and forward to error handler
-    app.use(function (req, res, next) {
+    app.use(function (req, res, next)
+    {
         var err = new Error('Not Found');
         err.status = 404;
         next(err);
     });
 // error handler
-    app.use(function (err, req, res, next) {
+    app.use(function (err, req, res, next)
+    {
         // set locals, only providing error in development
         res.locals.message = err.message;
         res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -66,3 +68,8 @@ MongoClient.connect(url, function (err, db)
     });
 });
 module.exports = app;
+// exposing the router variable globally to be used into different files.
+
+//about procfile:- Procfile is a mechanism for declaring what commands are run by your application's dynos on the Heroku platform.
+// Procfile to tell Heroku how to run various pieces of your app.
+// Package.JSon is used to give information to npm that allows it to identify the project as

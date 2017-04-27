@@ -88,14 +88,15 @@ router.post('/delete', function (req, res, next)
 
 router.post('/edit', function (req,res,next)
 {
-    var query= { 'name' : req.body.name };
+    var query= { '_id' : ObjectID(req.body.id)};
     var update= {name:req.body.name};
     req.db.collection('tasks').findOneAndUpdate(query, update, function (err, tasksTOBeUpdated)
     {
         if (err) {
             return next(new Error('Unable to update the task: ' + tasksTOBeUpdated.name));
         }
-        res.redirect('/')
+        res.status(503);
+        res.send(req.body.name);
 
     });
 

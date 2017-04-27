@@ -1,7 +1,7 @@
 $(function()
 {
 
-    $("head").append('<script type="text/javascript" src="../javascripts/jquery.jeditable.js"></script>');
+    // $("head").append('<script type="text/javascript" src="/javascripts/jquery.jeditable.js"></script>');
     // Add a listener for input text; listen for Enter key.
     // Send POST request to create new task
     getAllTasks(); // calls /all url in index.js and displays all the data;line 92 on this page;
@@ -44,22 +44,21 @@ function addTasksToPage(tasks)
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
-    var task = $('<div id="' + task._id + '" class="task-list"><span class="taskName">' + task.name + '</span><button id="' + task._id + '" class="edit">Edit</button><button id="' + task._id + '" class="delete">Delete</button>' +
-        '<button id="' + task._id + '" class="Done">Done</button><button id="' + task._id + '" class="Done">Star</button></div> ');
+    var task = $('<div id="' + task._id + '" class="task-list"><span id="' + task._id + '" class="taskName">' + task.name + '</span><button id="' + task._id + '" class="delete">Delete</button>' +
+        '<button id="' + task._id + '" class="Done">Done</button>');
     $("button.delete" , task).click(function ()
     {
         delete_Task_Ajax($(this).attr('id'));
 
     });
-    $("button.edit", task).click(function ()
+
+    $("span.taskName", task).editable('/edit',
     {
-        $(this).text("Save");
-        $('.taskName').editable('/edit',
-            {
-            type      : 'textarea',
-            tooltip   : 'Click to edit...'
-        });
+        name:'name'
+
     });
+
+
    task_list.append(task);
 }
 
@@ -104,24 +103,24 @@ function addNewTask_AjaxCall(task)
     });
 
 }
-function Edit_task_Ajax(task)
-{
-    console.log("I am the task", task);
-    $.ajax({
-        method: "POST",
-        url: "/edit",
-        data: { "name": task }  // sends id to /delete route in index.js
-    }).done(function (data) // data has the result after deleting the task;
-    {
-        console.log('Update complete');
-        // Select div containing this item, and remove from page
-        $('.taskName').innerText = task;
-    }).fail(function (error) {
-        console.log('Update error');
-        console.log(error);
-    });
-
-}
+// function Edit_task_Ajax(task)
+// {
+//     console.log("I am the task", task);
+//     $.ajax({
+//         method: "POST",
+//         url: "/edit",
+//         data: { "name": task }  // sends id to /delete route in index.js
+//     }).done(function (data) // data has the result after deleting the task;
+//     {
+//         console.log('Update complete');
+//         // Select div containing this item, and remove from page
+//         $('.taskName').innerText = task;
+//     }).fail(function (error) {
+//         console.log('Update error');
+//         console.log(error);
+//     });
+//
+// }
 
 function delete_Task_Ajax(id)
 {
