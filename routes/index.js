@@ -59,7 +59,7 @@ router.post('/delete', function (req, res, next)
         {
             return next(err);
         }
-        return res.render('delete_tasks.hbs',{'tasks': req.body} ); // directs to delete-page
+        return res.json({'tasks': req.body} );
     });
 });
 
