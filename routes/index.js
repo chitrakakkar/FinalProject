@@ -15,7 +15,7 @@ router.get('/', function(req, res, next)
       return next(err)
     }
     else {
-      res.render('index', {title: 'TO DO List', tasks: taskDocs}); // tasksDocs contains all object items
+      res.render('index', {title: 'To Do List', tasks: taskDocs}); // tasksDocs contains all object items
     }
   })
 });
@@ -88,7 +88,7 @@ router.post('/done', function (req, res,next )
         {
             return next(err);
         }
-        res.redirect('/alldone');
+        res.redirect('/');
         //res.render('done_tasks', {title: 'Done Tasks', tasks: tasks });
     })
 
@@ -107,7 +107,7 @@ router.post('/done', function (req, res,next )
 //
 //     });
 // });
-router.post('/alldone', function(req, res, next)
+router.get('/done_tasks', function(req, res, next)
 {
     Task.find({done:true}, function(err, all_Done_tasks)
     {
@@ -116,7 +116,7 @@ router.post('/alldone', function(req, res, next)
         {
             return next(err);
         }
-        req.flash('info', 'All tasks are done!');
+        //req.flash('info', 'All tasks are done!');
         res.render('done_tasks', {title: 'Done Tasks', tasks: all_Done_tasks });
 
     });

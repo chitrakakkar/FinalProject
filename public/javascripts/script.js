@@ -45,8 +45,7 @@ function addTasksToPage(tasks)
 function add_task_to_webPage(task, task_list)
 {
 
-    var task =  $('<div id="' + task._id + '" class="task-list"><span id="' + task._id + '" class="taskName">' + task.name + '</span><button id="' + task._id + '" class="delete">Delete</button>' +
-        '<button id="' + task._id + '" class="Done">Done</button>');
+    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="' + task._id + '" class="taskName">' + task.name + '</span><button id="' + task._id + '" class="delete">Delete</button></div>');
     $("button.delete" , task).click(function ()
     {
         delete_Task_Ajax($(this).attr('id'));

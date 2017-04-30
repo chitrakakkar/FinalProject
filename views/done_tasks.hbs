@@ -1,7 +1,7 @@
 <div class="task_list">
 
     {{#each tasks}}
-        {{this.text}}<button id="Delete_button" type="submit">Delete</button><button id="Move_to_todo_button" type="submit">MoveToThe List</button>
+        <li>{{this.name}}</li>
     {{else}}
         <P>No tasks have been completed!</P>
     {{/each}}
