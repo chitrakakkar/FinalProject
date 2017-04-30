@@ -44,7 +44,8 @@ function addTasksToPage(tasks)
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
-    var task = $('<div id="' + task._id + '" class="task-list"><span id="' + task._id + '" class="taskName">' + task.name + '</span><button id="' + task._id + '" class="delete">Delete</button>' +
+
+    var task =  $('<div id="' + task._id + '" class="task-list"><span id="' + task._id + '" class="taskName">' + task.name + '</span><button id="' + task._id + '" class="delete">Delete</button>' +
         '<button id="' + task._id + '" class="Done">Done</button>');
     $("button.delete" , task).click(function ()
     {
@@ -57,9 +58,15 @@ function add_task_to_webPage(task, task_list)
         name:'name'
 
     });
+    $("button.Done" , task).click(function ()
+    {
+        done_task_Ajax($(this).attr('id'));
+
+    });
 
 
    task_list.append(task);
+
 }
 
 // These functions make AJAX calls
@@ -89,7 +96,7 @@ function addNewTask_AjaxCall(task)
         data: { "name" : task } //sends tasks to the /add route to add data to the database;
     }).done(function(data) // data has the  database with new data added;
     {
-        console.log("I am the data " + task);
+        console.log("I am the data " + JSON.stringify(data));
 
         console.log('POST complete');
 
@@ -139,6 +146,22 @@ function delete_Task_Ajax(id)
         });
     }).fail(function (error) {
         console.log('DELETE error');
+        console.log(error);
+    });
+}
+
+function done_task_Ajax(id)
+{
+    $.ajax({
+        method: "POST",
+        url: "/done",
+        data: { "id": id }  // sends id to /delete route in index.js
+    }).done(function (data) // data has the result after deleting the task;
+    {
+        console.log("data", data);
+        console.log('task moved to done');
+    }).fail(function (error) {
+        console.log('done error');
         console.log(error);
     });
 }

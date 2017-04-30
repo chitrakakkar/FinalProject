@@ -9,24 +9,27 @@ var flash = require('express-flash');
 
 var index = require('./routes/index');
 var assert = require('assert');
-var MongoClient = require('mongodb').MongoClient;
+//var MongoClient = require('mongodb').MongoClient;
 var users = require('./routes/users');
 
-var app = express();
+
 
 //var mongo_pw = process.env.Mongo_PW;
 var url = 'mongodb://localhost:27017/Tasks';
+mongoose.connect(url);
 
 
-MongoClient.connect(url, function (err, db)
-{
-    assert.equal(null, err);
-    console.log('connected to MongoDB');
+var app = express();
+
+// MongoClient.connect(url, function (err, db)
+// {
+//     assert.equal(null, err);
+//     console.log('connected to MongoDB');
 
 
 // view engine setup
-    app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
+ app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -42,11 +45,11 @@ MongoClient.connect(url, function (err, db)
 // This function will run before each route handler…
 
 // getting a database connection object
-    app.use('/', function (req, res, next)
-    {
-        req.db = db;
-        next();
-    });
+//     app.use('/', function (req, res, next)
+//     {
+//         req.db = db;
+//         next();
+//     });
     app.use('/', index);
 // catch 404 and forward to error handler
     app.use(function (req, res, next)
@@ -65,7 +68,7 @@ MongoClient.connect(url, function (err, db)
         // render the error page
         res.status(err.status || 500);
         res.render('error');
-    });
+
 });
 module.exports = app;
 // exposing the router variable globally to be used into different files.
