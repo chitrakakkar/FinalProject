@@ -77,32 +77,47 @@ router.post('/edit', function (req,res,next)
     });
 });
 // router grabs the complated task from the mongoose database
-router.get('/done', function (req, res,next )
+router.post('/done', function (req, res,next )
 {
     console.log("ID", req.body.id);
     var update= {done:true};
-    Task.findByIdAndUpdate(req.body.id, update,{new: true},function(err, tasks)
+    Task.findByIdAndUpdate(req.body.id, update,function(err, tasks)
     {
         console.log("Tasks", tasks);
         if (err)
         {
             return next(err);
         }
-        res.render('done_tasks', {title: 'Done Tasks', tasks: tasks });
+        res.redirect('/alldone');
+        //res.render('done_tasks', {title: 'Done Tasks', tasks: tasks });
     })
 
 });
 /* Mark all tasks as done. */
-router.post('/alldone', function(req, res, next){
-
-    Task.update( {done:false}, {done:true}, {multi:true}, function(err){
+// router.post('/alldone', function(req, res, next){
+//
+//     Task.update( {done:false}, {done:true}, {multi:true}, function(err, tasks){
+//
+//         if (err)
+//         {
+//             return next(err);
+//         }
+//         req.flash('info', 'All tasks are done!');
+//        res.render('/done')
+//
+//     });
+// });
+router.post('/alldone', function(req, res, next)
+{
+    Task.find({done:true}, function(err, all_Done_tasks)
+    {
 
         if (err)
         {
             return next(err);
         }
         req.flash('info', 'All tasks are done!');
-        return res.redirect('/')
+        res.render('done_tasks', {title: 'Done Tasks', tasks: all_Done_tasks });
 
     });
 });

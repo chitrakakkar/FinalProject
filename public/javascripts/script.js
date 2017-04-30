@@ -158,13 +158,9 @@ function done_task_Ajax(id)
         data: { "id": id }  // sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
-        var Task = data.name;
-        for(var i=0;i<data.length;i++)
-        {
-            console.log(Task)
-
-        }
-        console.log("data", data);
+        document.open();
+        document.write(data);
+        document.close();
         console.log('task moved to done');
     }).fail(function (error) {
         console.log('done error');
