@@ -102,6 +102,7 @@ router.post('/done', function (req, res,next )
 /* Mark all tasks as done. */
 router.post('/markedalldone', function(req, res, next)
 {
+    console.log("Mark all done req.body");
 
     Task.update( {done:false}, {done:true}, {multi:true}, function(err, tasks){
 

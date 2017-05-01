@@ -42,6 +42,7 @@ function addTasksToPage(tasks)
     }
 
 }
+
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
@@ -69,6 +70,7 @@ function add_task_to_webPage(task, task_list)
         mark_all_done_task_Ajax(task_list)
     });
     task_list.append(task);
+
 }
 
 // These functions make AJAX calls
@@ -181,6 +183,7 @@ function done_task_Ajax(id)
 
 function mark_all_done_task_Ajax(task_list)
 {
+    alert("I am the task list "+  JSON.stringify(task_list));
     $.ajax({
         method: "POST",
         url: "/markedalldone",
