@@ -1,7 +1,7 @@
 <div class="task_list">
 
     {{#each tasks}}
-        <li>{{this.name}}</li>
+        <li>{{@index}}&nbsp&nbsp{{this.name}}</li>
     {{else}}
         <P>No tasks have been completed!</P>
     {{/each}}

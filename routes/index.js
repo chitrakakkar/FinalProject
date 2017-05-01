@@ -52,14 +52,20 @@ router.post('/add', function(req, res, next)
 //delete a task;
 router.post('/delete', function (req, res, next)
 {
+    // Task.find(req.body.id, function (err, result)
+    // {
+    //     console.log("I am the name", result);
+    //
+    // });
     // req.body has id ;not _id;
-    Task.findByIdAndRemove(req.body.id,function (err)
+    Task.findByIdAndRemove(req.body.id,function (err, result)
     {
+        console.log("Check me", result.name);
         if (err)
         {
             return next(err);
         }
-        return res.json({'tasks': req.body} );
+        return res.json({'tasks': req.body, 'name':result.name} );
     });
 });
 
@@ -88,7 +94,10 @@ router.post('/done', function (req, res,next )
         {
             return next(err);
         }
+        res.send(tasks.name);
         res.redirect('/');
+
+
         //res.render('done_tasks', {title: 'Done Tasks', tasks: tasks });
     })
 

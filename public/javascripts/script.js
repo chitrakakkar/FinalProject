@@ -45,7 +45,7 @@ function addTasksToPage(tasks)
 function add_task_to_webPage(task, task_list)
 {
 
-    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="' + task._id + '" class="taskName">' + task.name + '</span><button id="' + task._id + '" class="delete">Delete</button></div>');
+    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="' + task._id + '" class="taskName">' + task.name +'(click to edit)'+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
     $("button.delete" , task).click(function ()
     {
         delete_Task_Ajax($(this).attr('id'));
@@ -65,6 +65,7 @@ function add_task_to_webPage(task, task_list)
 
 
    task_list.append(task);
+
 
 }
 
@@ -143,7 +144,10 @@ function delete_Task_Ajax(id)
         {
             $(this).remove();
         });
-    }).fail(function (error) {
+        alert("Are you sure you want to delete " + data.name+ "?");
+        alert(data.name+" has been deleted")
+    }).fail(function (error)
+    {
         console.log('DELETE error');
         console.log(error);
     });
@@ -160,7 +164,7 @@ function done_task_Ajax(id)
         document.open();
         document.write(data);
         document.close();
-        console.log('task moved to done');
+        alert(JSON.stringify(data) + "Has been moved to done task list !!")
     }).fail(function (error) {
         console.log('done error');
         console.log(error);
