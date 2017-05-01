@@ -17,7 +17,13 @@ function addNewTaskForm()
     });
 }
 
-
+function mark_all_done(task_list)
+{
+    $('#mark_all_done__button').click(function (event)
+    {
+        mark_all_done_task_Ajax(task_list)
+    });
+}
 
 // function Edit_task()
 // {
@@ -40,7 +46,7 @@ function addTasksToPage(tasks)
     {
         add_task_to_webPage(tasks[i], task_list);
     }
-
+    mark_all_done(task_list)
 }
 
 //dynamically creating html element for the task-list
@@ -65,10 +71,7 @@ function add_task_to_webPage(task, task_list)
         done_task_Ajax($(this).attr('id'));
 
     });
-    $('#mark_all_done__button').click(function (event)
-    {
-        mark_all_done_task_Ajax(task_list)
-    });
+
     task_list.append(task);
 
 }
@@ -183,13 +186,12 @@ function done_task_Ajax(id)
 
 function mark_all_done_task_Ajax(task_list)
 {
-    alert("I am the task list "+  JSON.stringify(task_list));
     $.ajax({
         method: "POST",
-        url: "/markedalldone",
-        data: { 'tasks': task_list }  // sends id to /delete route in index.js
+        url: "/markedalldone"// sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
+        task_list.remove();
         alert( "All tasks Have been moved to done task list !!")
     }).fail(function (error) {
         console.log('done error');
