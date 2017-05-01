@@ -29,13 +29,13 @@ h1
 
 }
 .Done{
-  margin-left: -30px;
+  margin-left: 130px;
   background-color: whitesmoke;
 
 }
 .delete
 {
-  margin-left: 120px;
+  margin-left: 150px;
   background-color: whitesmoke;
 }
 .task-list{
@@ -53,11 +53,11 @@ p{
 {
 
   width:450px;
-  margin-left: 50px;
+  margin-left: 160px;
 }
-#All_done__button
+#mark_all_done__button
 {
-  margin-left: 100px;
+  margin-left: 160px;
   background-color: whitesmoke;
 }
 a
@@ -67,8 +67,28 @@ a
 }
 #new_task_button{
   background-color: whitesmoke;
+
 }
 
 li{
   list-style: none;
+}
+/* horizontal break*/
+.hr-sect
+{
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  color: darkmagenta;
+  margin: 8px 0px;
+}
+.hr-sect::before,
+.hr-sect::after {
+  content: "";
+  flex-grow: 1;
+  background: darkmagenta;
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
+  margin: 0px 8px;
 }

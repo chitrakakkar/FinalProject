@@ -95,27 +95,24 @@ router.post('/done', function (req, res,next )
             return next(err);
         }
         res.send(tasks.name);
-        res.redirect('/');
-
-
         //res.render('done_tasks', {title: 'Done Tasks', tasks: tasks });
     })
 
 });
 /* Mark all tasks as done. */
-// router.post('/alldone', function(req, res, next){
-//
-//     Task.update( {done:false}, {done:true}, {multi:true}, function(err, tasks){
-//
-//         if (err)
-//         {
-//             return next(err);
-//         }
-//         req.flash('info', 'All tasks are done!');
-//        res.render('/done')
-//
-//     });
-// });
+router.post('/markedalldone', function(req, res, next)
+{
+
+    Task.update( {done:false}, {done:true}, {multi:true}, function(err, tasks){
+
+        if (err)
+        {
+            return next(err);
+        }
+       res.redirect('/')
+
+    });
+});
 router.get('/done_tasks', function(req, res, next)
 {
     Task.find({done:true}, function(err, all_Done_tasks)

@@ -1,3 +1,4 @@
+var counter=0;
 $(function()
 {
 
@@ -44,8 +45,9 @@ function addTasksToPage(tasks)
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
+    counter++;
+    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="' + task._id + '" class="taskName">' + counter + ". " + task.name+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
 
-    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="' + task._id + '" class="taskName">' + task.name +'(click to edit)'+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
     $("button.delete" , task).click(function ()
     {
         delete_Task_Ajax($(this).attr('id'));
@@ -62,11 +64,11 @@ function add_task_to_webPage(task, task_list)
         done_task_Ajax($(this).attr('id'));
 
     });
-
-
-   task_list.append(task);
-
-
+    $('#mark_all_done__button').click(function (event)
+    {
+        mark_all_done_task_Ajax(task_list)
+    });
+    task_list.append(task);
 }
 
 // These functions make AJAX calls
@@ -131,26 +133,32 @@ function addNewTask_AjaxCall(task)
 
 function delete_Task_Ajax(id)
 {
+    if(confirm('Are you sure you want to delete?'))
+    {
     $.ajax({
         method: "POST",
         url: "/delete",
         data: { "id": id }  // sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
-        console.log('DELETE complete');
+
         // Select div containing this item, and remove from page
         var div_id = '#' + id + "";
-        $(div_id).fadeOut(function()
-        {
+        $(div_id).fadeOut(function () {
             $(this).remove();
         });
-        alert("Are you sure you want to delete " + data.name+ "?");
-        alert(data.name+" has been deleted")
+        console.log('DELETE complete');
+        alert(data.name + " has been deleted")
     }).fail(function (error)
     {
         console.log('DELETE error');
         console.log(error);
     });
+    }
+    else
+        {
+        alert("delete cancelled !!! ")
+    }
 }
 
 function done_task_Ajax(id)
@@ -165,6 +173,21 @@ function done_task_Ajax(id)
         document.write(data);
         document.close();
         alert(JSON.stringify(data) + "Has been moved to done task list !!")
+    }).fail(function (error) {
+        console.log('done error');
+        console.log(error);
+    });
+}
+
+function mark_all_done_task_Ajax(task_list)
+{
+    $.ajax({
+        method: "POST",
+        url: "/markedalldone",
+        data: { 'tasks': task_list }  // sends id to /delete route in index.js
+    }).done(function (data) // data has the result after deleting the task;
+    {
+        alert( "All tasks Have been moved to done task list !!")
     }).fail(function (error) {
         console.log('done error');
         console.log(error);
