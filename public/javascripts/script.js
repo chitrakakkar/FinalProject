@@ -6,7 +6,7 @@ $(function()
     // Add a listener for input text; listen for Enter key.
     // Send POST request to create new task
     getAllTasks(); // calls /all url in index.js and displays all the data;line 92 on this page;
-
+    mark_all_done()
 });
 function addNewTaskForm()
 {
@@ -17,11 +17,11 @@ function addNewTaskForm()
     });
 }
 
-function mark_all_done(task_list)
+function mark_all_done()
 {
     $('#mark_all_done__button').click(function (event)
     {
-        mark_all_done_task_Ajax(task_list)
+        mark_all_done_task_Ajax()
     });
 }
 
@@ -46,7 +46,7 @@ function addTasksToPage(tasks)
     {
         add_task_to_webPage(tasks[i], task_list);
     }
-    mark_all_done(task_list)
+
 }
 
 //dynamically creating html element for the task-list
@@ -63,7 +63,8 @@ function add_task_to_webPage(task, task_list)
 
     $("span.taskName", task).editable('/edit',
     {
-        name:'name'
+        name:'name',
+        onblur:'ignore'
 
     });
     $("button.Done" , task).click(function ()
@@ -174,7 +175,7 @@ function done_task_Ajax(id)
         data: { "id": id }  // sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
-        document.open();
+        document.open();  // render html page
         document.write(data);
         document.close();
         alert(JSON.stringify(data) + "Has been moved to done task list !!")
@@ -184,7 +185,7 @@ function done_task_Ajax(id)
     });
 }
 
-function mark_all_done_task_Ajax(task_list)
+function mark_all_done_task_Ajax()
 {
     $.ajax({
         method: "POST",

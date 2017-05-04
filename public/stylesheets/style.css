@@ -10,6 +10,11 @@ body
 
 
 }
+.taskName > form
+{
+  display: inline;
+
+}
 #full-body
 {
   background-color: lightsteelblue;
