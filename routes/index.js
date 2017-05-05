@@ -82,7 +82,7 @@ router.post('/edit', function (req,res,next)
 
     });
 });
-// router grabs the complated task from the mongoose database
+// updates a single task as done on click event of done button;
 router.post('/done', function (req, res,next )
 {
     console.log("ID", req.body.id);
