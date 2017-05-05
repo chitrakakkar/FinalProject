@@ -1,23 +1,29 @@
 var express = require('express');
 var router = express.Router();
-var ObjectID = require('mongodb').ObjectID;
 var Task = require('../models/task'); // grabs schema from the task.js;no more db.collection
 
 
 /* GET home page. */
-router.get('/', function(req, res, next)
-{
-  //.find() gets all the documents inside a collection
-  Task.find({done:false}, function (err, taskDocs)
-  {
-    console.log("Check me",taskDocs);
-    if (err) {
-      return next(err)
-    }
-    else {
-      res.render('index', {title: 'To Do List', tasks: taskDocs}); // tasksDocs contains all object items
-    }
-  })
+router.get('/', function(req, res, next) {
+    //.find() gets all the documents inside a collection
+    Task.find({done: false}, function (err, newtasks)
+    {
+        if (err) {
+            return next(err)}
+        else
+            {
+            Task.find({done: true}, function (err, doneTasks) {
+                if (err) {
+                    return next(err)
+                }
+                else {
+                    res.render('index', {title: 'To Do List', tasks: newtasks, doneTasks: doneTasks}); // tasksDocs contains all object items
+                }
+                console.log("I am the new tasks",newtasks);
+                console.log("I am the done tasks list", doneTasks);
+            })
+        }
+    });
 });
 
 /* GET all items home page. */
@@ -113,19 +119,20 @@ router.post('/markedalldone', function(req, res, next)
 
     });
 });
-/*get all done tasks */
-router.get('/all_done_tasks', function(req, res, next)
-{
-    Task.find({done:true}, function(err, all_Done_tasks)
-    {
-
-        if (err)
-        {
-            return next(err);
-        }
-        res.send({tasks: all_Done_tasks });
-
-    });
-});
+// /*get all done tasks */
+// router.get('/all_done_tasks', function(req, res, next)
+// {
+//     Task.find({done:true}, function(err, all_Done_tasks)
+//     {
+//         console.log("All done list", all_Done_tasks);
+//
+//         if (err)
+//         {
+//             return next(err);
+//         }
+//         res.send({tasks: all_Done_tasks });
+//
+//     });
+// });
 
 module.exports = router;

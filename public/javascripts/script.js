@@ -49,6 +49,7 @@ function addTasksToPage(tasks)
 
 }
 
+
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
@@ -76,7 +77,20 @@ function add_task_to_webPage(task, task_list)
     task_list.append(task);
 
 }
+function addCompletedTasksToPage(CompletedTasks)
+{
+    var Completed_task_list=$('#completed_task_list');
+    for(var i=0;i<CompletedTasks.length;i++)
+    {
+        Add_CompletedTask_to_Webpage(CompletedTasks[i], Completed_task_list)
+    }
 
+}
+function  Add_CompletedTask_to_Webpage(Completed_task, Completed_task_list)
+{
+    var Completed_task =  $('<div id="' + Completed_task._id + '" class="Completed_task-list"><button id="' + Completed_task._id + '" class="Done">Done</button><span id="' + Completed_task._id + '" class="taskName">' + counter + ". " + Completed_task.name+ '</span><button id="' + Completed_task._id + '" class="delete">Delete</button></div><br>');
+    Completed_task_list.append(Completed_task);
+}
 // These functions make AJAX calls
 // get all -/all router in index.js
 function getAllTasks()
@@ -85,10 +99,14 @@ function getAllTasks()
     $.ajax({
         method:"GET",
         url:"/all"
-    }).done(function(data) {
+    }).done(function(newTask, CompletedTask)
+    {
+        alert(JSON.stringify(newTask));
+        alert(JSON.stringify(CompletedTask));
         //Build HTML for each task in list
-        addTasksToPage(data);
+        addTasksToPage(newTask);
         addNewTaskForm();  //Once page is loaded, enable form
+        addCompletedTasksToPage(CompletedTask);
 
     }).fail(function(error){
         console.log("GET error");
@@ -118,24 +136,6 @@ function addNewTask_AjaxCall(task)
     });
 
 }
-// function Edit_task_Ajax(task)
-// {
-//     console.log("I am the task", task);
-//     $.ajax({
-//         method: "POST",
-//         url: "/edit",
-//         data: { "name": task }  // sends id to /delete route in index.js
-//     }).done(function (data) // data has the result after deleting the task;
-//     {
-//         console.log('Update complete');
-//         // Select div containing this item, and remove from page
-//         $('.taskName').innerText = task;
-//     }).fail(function (error) {
-//         console.log('Update error');
-//         console.log(error);
-//     });
-//
-// }
 
 function delete_Task_Ajax(id)
 {
@@ -193,6 +193,7 @@ function mark_all_done_task_Ajax()
     }).done(function (data) // data has the result after deleting the task;
     {
         task_list.remove();
+
         alert( "All tasks Have been moved to done task list !!")
     }).fail(function (error) {
         console.log('done error');

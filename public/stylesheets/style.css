@@ -10,10 +10,22 @@ body
 
 
 }
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor
+{
+  background-color: lightsteelblue;
+}
+.ui-tabs .ui-tabs-nav
+{
+  background-color: darkmagenta;
+}
+
 .taskName > form
 {
   display: inline;
 
+}
+#tabs{
+  background-color: white;
 }
 #full-body
 {

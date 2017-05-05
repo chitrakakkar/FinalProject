@@ -3,7 +3,7 @@
 
     <h1 style="color: white">{{title}}</h1>
     <div id="tabs">
-        <ul>
+        <ul id="list">
             <li><a href="#about">About</a></li>
             <li><a href="#add_new_task">New Task</a></li>
             <li><a href="#Completed_task_list">Completed Task</a></li>
@@ -28,13 +28,7 @@
             </div>
         </div>
         <div id="Completed_task_list">
-            <form id="Complete_task_form" action="/all_done_tasks" method="GET">
-            {{#each tasks}}
-                <li>{{@index}}&nbsp&nbsp{{this.name}}</li>
-            {{else}}
-                <P>No tasks have been completed!</P>
-            {{/each}}
-                </form>
+
         </div>
     </div>
 </div>
