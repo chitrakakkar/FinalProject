@@ -99,14 +99,15 @@ function getAllTasks()
     $.ajax({
         method:"GET",
         url:"/all"
-    }).done(function(newTask, CompletedTask)
+    }).done(function(data)
     {
-        alert(JSON.stringify(newTask));
-        alert(JSON.stringify(CompletedTask));
+        alert("I am data"+ JSON.stringify(data));
+        alert(JSON.stringify(data.tasks));
+        alert(JSON.stringify(data.doneTasks));
         //Build HTML for each task in list
-        addTasksToPage(newTask);
+        addTasksToPage(data.tasks);
         addNewTaskForm();  //Once page is loaded, enable form
-        addCompletedTasksToPage(CompletedTask);
+        addCompletedTasksToPage(data.doneTasks);
 
     }).fail(function(error){
         console.log("GET error");
