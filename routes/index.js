@@ -10,30 +10,33 @@ router.get('/', function(req, res, next) {
     {
         if (err) {
             return next(err)}
-        else
-            {
+
+                else {
+                    res.render('index', {title: 'To Do List', tasks: newtasks}); // tasksDocs contains all object items
+                }
+                console.log("I am the new tasks",newtasks);
+
+            })
+    });
+
+
+/* GET all items home page. */
+router.get('/all', function(req, res) {
+    Task.find({done: false}, function (err, taskDocs) {
+        if (err) {
+            return next(err)
+        }
+        else {
             Task.find({done: true}, function (err, doneTasks) {
                 if (err) {
                     return next(err)
                 }
-                else {
-                    res.render('index', {title: 'To Do List', tasks: newtasks, doneTasks: doneTasks}); // tasksDocs contains all object items
-                }
-                console.log("I am the new tasks",newtasks);
-                console.log("I am the done tasks list", doneTasks);
+                console.log(taskDocs);
+                console.log(doneTasks);
+                res.json({tasks: taskDocs, doneTasks: doneTasks}); // returns Json object
             })
         }
     });
-});
-
-/* GET all items home page. */
-router.get('/all', function(req, res)
-{
-  Task.find({done:false} , function (err, taskDocs)
-  {
-    console.log(taskDocs);
-    res.json(taskDocs); // returns Json object
-  })
 });
 
 router.post('/add', function(req, res, next)

@@ -101,9 +101,8 @@ function getAllTasks()
         url:"/all"
     }).done(function(data)
     {
-        alert("I am data"+ JSON.stringify(data));
-        alert(JSON.stringify(data.tasks));
-        alert(JSON.stringify(data.doneTasks));
+        // alert(JSON.stringify(data.tasks));
+        // alert(JSON.stringify(data.doneTasks));
         //Build HTML for each task in list
         addTasksToPage(data.tasks);
         addNewTaskForm();  //Once page is loaded, enable form
