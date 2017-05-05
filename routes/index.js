@@ -103,7 +103,7 @@ router.post('/done', function (req, res,next )
         {
             return next(err);
         }
-        res.send(tasks.name);
+        res.send(tasks);
     })
 
 });

@@ -79,7 +79,7 @@ function add_task_to_webPage(task, task_list)
 }
 function addCompletedTasksToPage(CompletedTasks)
 {
-    var Completed_task_list=$('#completed_task_list');
+    var Completed_task_list=$('#Completed_task_list');
     for(var i=0;i<CompletedTasks.length;i++)
     {
         Add_CompletedTask_to_Webpage(CompletedTasks[i], Completed_task_list)
@@ -88,6 +88,7 @@ function addCompletedTasksToPage(CompletedTasks)
 }
 function  Add_CompletedTask_to_Webpage(Completed_task, Completed_task_list)
 {
+    counter++;
     var Completed_task =  $('<div id="' + Completed_task._id + '" class="Completed_task-list"><button id="' + Completed_task._id + '" class="Done">Done</button><span id="' + Completed_task._id + '" class="taskName">' + counter + ". " + Completed_task.name+ '</span><button id="' + Completed_task._id + '" class="delete">Delete</button></div><br>');
     Completed_task_list.append(Completed_task);
 }
@@ -101,8 +102,8 @@ function getAllTasks()
         url:"/all"
     }).done(function(data)
     {
-        // alert(JSON.stringify(data.tasks));
-        // alert(JSON.stringify(data.doneTasks));
+        alert("I am the New task" + JSON.stringify(data.tasks));
+        alert("I am the done task list"+JSON.stringify(data.doneTasks));
         //Build HTML for each task in list
         addTasksToPage(data.tasks);
         addNewTaskForm();  //Once page is loaded, enable form
@@ -175,10 +176,13 @@ function done_task_Ajax(id)
         data: { "id": id }  // sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
-        document.open();  // render html page;opens the page;writes on it and closes it(for my understanding)
-        document.write(data); // taken from stack over flow;
-        document.close();
-        alert(JSON.stringify(data) + "Has been moved to done task list !!")
+        alert(JSON.stringify(data) + "Has been moved to done task list !!");
+        var Completed_task_list=$('#Completed_task_list');
+        Add_CompletedTask_to_Webpage(data, Completed_task_list);
+        var div_id = '#' + id + "";
+        $(div_id).fadeOut(function () {
+            $(this).remove();
+        });
     }).fail(function (error) {
         console.log('done error');
         console.log(error);
