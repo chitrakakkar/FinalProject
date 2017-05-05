@@ -95,7 +95,6 @@ router.post('/done', function (req, res,next )
             return next(err);
         }
         res.send(tasks.name);
-        //res.render('done_tasks', {title: 'Done Tasks', tasks: tasks });
     })
 
 });
@@ -114,7 +113,8 @@ router.post('/markedalldone', function(req, res, next)
 
     });
 });
-router.get('/done_tasks', function(req, res, next)
+/*get all done tasks */
+router.get('/all_done_tasks', function(req, res, next)
 {
     Task.find({done:true}, function(err, all_Done_tasks)
     {
@@ -123,7 +123,6 @@ router.get('/done_tasks', function(req, res, next)
         {
             return next(err);
         }
-        //req.flash('info', 'All tasks are done!');
         res.send({tasks: all_Done_tasks });
 
     });

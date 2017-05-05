@@ -175,8 +175,8 @@ function done_task_Ajax(id)
         data: { "id": id }  // sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
-        document.open();  // render html page
-        document.write(data);
+        document.open();  // render html page;opens the page;writes on it and closes it(for my understanding)
+        document.write(data); // taken from stack over flow;
         document.close();
         alert(JSON.stringify(data) + "Has been moved to done task list !!")
     }).fail(function (error) {

@@ -65,11 +65,11 @@ p{
   margin-left: 160px;
   background-color: whitesmoke;
 }
-a
-{
-  text-decoration: none;
-  color: orangered;
-}
+/*a*/
+/*{*/
+  /*text-decoration: none;*/
+  /*color: orangered;*/
+/*}*/
 #new_task_button{
   background-color: whitesmoke;
 
