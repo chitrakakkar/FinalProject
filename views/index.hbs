@@ -1,45 +1,42 @@
 
 <div id="full-body">
-<div id="nav-items" class="collapse navbar-collapse">
-    <ul class="nav navbar-nav navbar-right js-nav">
 
-        <li><a href="#about">About</a></li>
+    <h1 style="color: white">{{title}}</h1>
+    <div id="tabs">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#add_new_task">New Task</a></li>
+            <li><a href="#Completed_task_list">Completed Task</a></li>
+        </ul>
+        <div id="about">
 
-        <li><a href="#add_new_task">New</a></li>
+            <p>This is an example of a basic To-Do-List which uses HTML, CSS, Javascript, Ajax for the front-end and Node/Express.js for the back-end coding.
+                This uses Mongoose as ORM for the Database Schema !!</p>
+            <p>The full source of the code is available at <a href="https://github.com/chitrakakkar/FinalProject">To-Do-GitHub</a> </p>
+        </div>
 
-        <li><a href="/done_tasks">Completed</a></li>
-
-    </ul>
-</div>
-<h1 style="color: white">{{title}}</h1>
-
-<br>
-<br>
-<br>
-
-<div id="add_new_task">
-    <button id="mark_all_done__button" type="submit">All Done</button>
-    <input id="new_task_text" name="name" type="text" placeholder="todo task" required />
-    <button id="new_task_button" type="submit">Add Task</button>
+        <div id="add_new_task">
+            <button id="mark_all_done__button" type="submit">All Done</button>
+            <input id="new_task_text" name="name" type="text" placeholder="todo task" required />
+            <button id="new_task_button" type="submit">Add Task</button>
+            <div class="hr-sect">
+                <h4 class="title">Click on task to edit it</h4>
+            </div>
+            <div id="task_list">
 
 
-</div>
-<br>
-    <div class="hr-sect">
-        <h4 class="title">Click on task to edit it</h4>
+            </div>
+        </div>
+        <div id="Completed_task_list">
+            <form id="Complete_task_form" action="/done_tasks" method="GET">
+            {{#each tasks}}
+                <li>{{@index}}&nbsp&nbsp{{this.name}}</li>
+            {{else}}
+                <P>No tasks have been completed!</P>
+            {{/each}}
+                </form>
+
+        </div>
+
     </div>
-
-<div id="task_list">
-
-
-</div>
-
-
-<div id="about" class="container">
-
-       <p>This is an example of a basic To-Do-List which uses HTML, CSS, Javascript, Ajax for the front-end and Node/Express.js for the back-end coding.
-       This uses Mongoose as ORM for the Database Schema !!</p>
-        <p>The full source of the code is available at <a href="https://github.com/chitrakakkar/FinalProject">To-Do-GitHub</a> </p>
-    </div>
-
 </div>

@@ -124,7 +124,7 @@ router.get('/done_tasks', function(req, res, next)
             return next(err);
         }
         //req.flash('info', 'All tasks are done!');
-        res.render('done_tasks', {title: 'Done Tasks', tasks: all_Done_tasks });
+        res.send({tasks: all_Done_tasks });
 
     });
 });

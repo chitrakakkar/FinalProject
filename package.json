@@ -13,6 +13,7 @@
     "express-flash": "0.0.2",
     "express-handlebars": "~3.0.0",
     "express-session": "^1.15.2",
+    "hbs":"~3.0.0",
     "moment": "^2.18.1",
     "mongodb":"2.2.24",
     "mongoose": "^4.8.6",
