@@ -114,8 +114,6 @@ function getAllTasks()
         url:"/all"
     }).done(function(data)
     {
-        alert("I am the New task" + JSON.stringify(data.tasks));
-        alert("I am the done task list"+JSON.stringify(data.doneTasks));
         //Build HTML for each task in list
         addTasksToPage(data.tasks);
         addNewTaskForm();  //Once page is loaded, enable form
@@ -208,7 +206,9 @@ function mark_all_done_task_Ajax()
         url: "/markedalldone"// sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
-        data.remove();
+        document.open(data);
+        document.write(data);
+        document.close(data);
 
         alert( "All tasks Have been moved to done task list !!")
     }).fail(function (error) {
@@ -229,9 +229,11 @@ function AddCompletedTaskAsNewTask_AjaxCall(id)
         $(div_id).fadeOut(function () {
             $(this).remove();
         });
-        addTasksToPage(data);
-        addNewTaskForm();  //Once page is loaded, enable form
-        alert( data.name + "Have been moved to the new task list !!")
+        var task_list = $('#task_list'); // to display the task lists in the new div
+        add_task_to_webPage(data, task_list);
+        // add_task_to_webPage();
+        // addNewTaskForm();  //Once page is loaded, enable form
+        alert( data.name + " task has been moved to the new task list !!")
     }).fail(function (error) {
         console.log('done error');
         console.log(error);
