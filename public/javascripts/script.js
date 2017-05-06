@@ -1,4 +1,5 @@
-var counter=0;
+var new_task_counter=0;
+var done_task_Counter=0;
 $(function()
 {
 
@@ -53,8 +54,8 @@ function addTasksToPage(tasks)
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
-    counter++;
-    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="' + task._id + '" class="taskName">' + counter + ". " + task.name+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
+    new_task_counter++
+    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="' + task._id + '" class="taskName">' + new_task_counter + ". " + task.name+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
 
     $("button.delete" , task).click(function ()
     {
@@ -88,9 +89,20 @@ function addCompletedTasksToPage(CompletedTasks)
 }
 function  Add_CompletedTask_to_Webpage(Completed_task, Completed_task_list)
 {
-    counter++;
-    var Completed_task =  $('<div id="' + Completed_task._id + '" class="Completed_task-list"><button id="' + Completed_task._id + '" class="Done">Done</button><span id="' + Completed_task._id + '" class="taskName">' + counter + ". " + Completed_task.name+ '</span><button id="' + Completed_task._id + '" class="delete">Delete</button></div><br>');
+  done_task_Counter++
+    var Completed_task =  $('<div id="' + Completed_task._id + '" class="Completed_task-list"><button id="' + Completed_task._id + '" class="Add">Add</button><span id="' + Completed_task._id + '" class="taskName">' + done_task_Counter + ". " + Completed_task.name+ '</span><button id="' + Completed_task._id + '" class="delete">Delete</button></div><br>');
     Completed_task_list.append(Completed_task);
+    $("button.delete" , Completed_task).click(function ()
+    {
+        delete_Task_Ajax($(this).attr('id'));
+
+    });
+    $("button.Add" , Completed_task).click(function ()
+    {
+        AddCompletedTaskAsNewTask_AjaxCall($(this).attr('id'))
+
+    });
+
 }
 // These functions make AJAX calls
 // get all -/all router in index.js
@@ -196,9 +208,30 @@ function mark_all_done_task_Ajax()
         url: "/markedalldone"// sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
-        task_list.remove();
+        data.remove();
 
         alert( "All tasks Have been moved to done task list !!")
+    }).fail(function (error) {
+        console.log('done error');
+        console.log(error);
+    });
+}
+function AddCompletedTaskAsNewTask_AjaxCall(id)
+{
+    $.ajax({
+        method: "POST",
+        url: "/CompletedAsNew",// sends id to /delete route in index.js
+        data: { "id": id }
+    }).done(function (data) // data has the result after deleting the task;
+    {
+        console.log("Check data !", data);
+        var div_id = '#' + id + "";
+        $(div_id).fadeOut(function () {
+            $(this).remove();
+        });
+        addTasksToPage(data);
+        addNewTaskForm();  //Once page is loaded, enable form
+        alert( data.name + "Have been moved to the new task list !!")
     }).fail(function (error) {
         console.log('done error');
         console.log(error);

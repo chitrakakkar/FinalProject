@@ -87,7 +87,7 @@ router.post('/edit', function (req,res,next)
         if (err) {
             return next(new Error('Unable to update the task: ' + tasksTOBeUpdated.name));
         }
-        res.send(req.body.name);
+        res.json(req.body.name);
 
     });
 });
@@ -103,7 +103,7 @@ router.post('/done', function (req, res,next )
         {
             return next(err);
         }
-        res.send(tasks);
+        res.json(tasks);
     })
 
 });
@@ -121,6 +121,22 @@ router.post('/markedalldone', function(req, res, next)
        res.redirect('/')
 
     });
+});
+
+router.post('/CompletedAsNew', function (req, res,next )
+{
+    console.log("ID", req.body.id);
+    var update= {done:false};
+    Task.findByIdAndUpdate(req.body.id, update,function(err, tasks)
+    {
+        console.log("Tasks", tasks);
+        if (err)
+        {
+            return next(err);
+        }
+        res.json(tasks);
+    })
+
 });
 // /*get all done tasks */
 // router.get('/all_done_tasks', function(req, res, next)
