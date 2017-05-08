@@ -1,5 +1,4 @@
-var new_task_counter=0;
-var done_task_Counter=0;
+//var done_task_Counter=0;
 $(function()
 {
 
@@ -22,7 +21,7 @@ function mark_all_done()
 {
     $('#mark_all_done__button').click(function (event)
     {
-        mark_all_done_task_Ajax()
+        mark_all_done_task_Ajax();
     });
 }
 
@@ -54,7 +53,7 @@ function addTasksToPage(tasks)
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
-    new_task_counter++;
+    var new_task_counter= $(".task-list").length;
     var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="counter">' + new_task_counter+ "."+ '</span><span id="' + task._id + '" class="taskName">' + task.name+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
 
     $("button.delete" , task).click(function ()
@@ -89,9 +88,11 @@ function addCompletedTasksToPage(CompletedTasks)
 }
 function  Add_CompletedTask_to_Webpage(Completed_task, Completed_task_list)
 {
-  done_task_Counter++
-    var Completed_task =  $('<div id="' + Completed_task._id + '" class="Completed_task-list"><button id="' + Completed_task._id + '" class="Add">Add</button><span id="' + Completed_task._id + '" class="taskName">' + done_task_Counter + ". " + Completed_task.name+ '</span><button id="' + Completed_task._id + '" class="delete">Delete</button></div><br>');
+    var done_task_Counter=$(".Completed_task-list").length;
+    var Completed_task =  $('<div id="' + Completed_task._id + '" class="Completed_task-list"><button id="' + Completed_task._id + '" class="Add">Add</button><span id="' + Completed_task._id + '" class="taskName">' + done_task_Counter+ ". " + Completed_task.name+ '</span><button id="' + Completed_task._id + '" class="delete">Delete</button></div><br>');
+    done_task_Counter++;
     Completed_task_list.append(Completed_task);
+
     $("button.delete" , Completed_task).click(function ()
     {
         delete_Task_Ajax($(this).attr('id'));
@@ -159,7 +160,9 @@ function addNewTask_AjaxCall(task)
         console.log(error);
     });}
     else {
-        alert("Empty string not allowed !")
+
+        alert("Empty string not allowed !");
+        $('#new_task_button').css({'outline': 'none'});
     }
 
 }
@@ -196,6 +199,7 @@ function delete_Task_Ajax(id)
 
 function done_task_Ajax(id)
 {
+    var task_list = $('#task_list');
     $.ajax({
         method: "POST",
         url: "/done",
@@ -228,8 +232,11 @@ function mark_all_done_task_Ajax()
             // document.open(data);
             // document.write(data);
             // document.close(data);
-            task_list.splice(0,task_list.length);
-            task_list.remove();
+
+            // task_list.remove();
+            // task_list.splice(0,task_list.length);
+            $('#task_list').empty();
+            $('#Completed_task_list').empty();
             getAllTasks();
             $('#mark_all_done__button').css({'outline': 'none'});
 
