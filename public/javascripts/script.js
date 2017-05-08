@@ -128,7 +128,7 @@ function getAllTasks()
 //adds new task-gets info from index.js-/add router
 function addNewTask_AjaxCall(task)
 {
-    if(task.length>0)
+    if(task.length >0)
     {
     $.ajax({
         method:"POST",
@@ -206,7 +206,7 @@ function done_task_Ajax(id)
         data: { "id": id }  // sends id to /delete route in index.js
     }).done(function (data) // data has the result after deleting the task;
     {
-        alert(JSON.stringify(data) + "Has been moved to done task list !!");
+        alert(data.name + " Has been moved to done task list !!");
         var Completed_task_list=$('#Completed_task_list');
         Add_CompletedTask_to_Webpage(data, Completed_task_list);
         var div_id = '#' + id + "";
@@ -221,8 +221,8 @@ function done_task_Ajax(id)
 
 function mark_all_done_task_Ajax()
 {
-    var task_list = $('#task_list');
-    if (task_list.length > 0)
+
+    if ($(".task-list").length != 0)
     {
         $.ajax({
             method: "POST",
@@ -239,7 +239,6 @@ function mark_all_done_task_Ajax()
             $('#Completed_task_list').empty();
             getAllTasks();
             $('#mark_all_done__button').css({'outline': 'none'});
-
             alert("All tasks Have been moved to done task list !!")
             }).fail(function (error) {
                 console.log('done error');
@@ -248,7 +247,8 @@ function mark_all_done_task_Ajax()
     }
     else
         {
-            alert("Nothing to move !!! ")
+            alert("Nothing to move !!! ");
+            $('#mark_all_done__button').css({'outline': 'none'});
         }
 
 }
