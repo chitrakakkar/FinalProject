@@ -41,31 +41,26 @@ router.get('/all', function(req, res) {
 
 router.post('/add', function(req, res, next)
 {
-    if (!req.body || !req.body.name)
-    {
-        //req.flash('error', 'Please enter some text');
-        res.redirect('/');
-    }
-    else
-    {
-     var task= Task({ name : req.body.name, done: false});
-      task.save(function(err)
+    console.log(req.body.name);
+    Task.findOne({name: req.body.name}, function (err, doc) {
+        if (doc)
         {
-            if (err) {
-                return next(err);
-            }
-           res.json(task)
-        });
-    }
+            res.send("Duplicate Entry")
+        }
+        else {
+            var task = Task({name: req.body.name, done: false});
+            task.save(function (err) {
+                if (err) {
+                    return next(err);
+                }
+                res.json(task)
+            });
+        }
+    });
 });
 //delete a task;
 router.post('/delete', function (req, res, next)
 {
-    // Task.find(req.body.id, function (err, result)
-    // {
-    //     console.log("I am the name", result);
-    //
-    // });
     // req.body has id ;not _id;
     Task.findByIdAndRemove(req.body.id,function (err, result)
     {
@@ -118,7 +113,7 @@ router.post('/markedalldone', function(req, res, next)
         {
             return next(err);
         }
-       res.redirect('/')
+        res.redirect('/')
 
     });
 });
@@ -138,20 +133,5 @@ router.post('/CompletedAsNew', function (req, res,next )
     })
 
 });
-// /*get all done tasks */
-// router.get('/all_done_tasks', function(req, res, next)
-// {
-//     Task.find({done:true}, function(err, all_Done_tasks)
-//     {
-//         console.log("All done list", all_Done_tasks);
-//
-//         if (err)
-//         {
-//             return next(err);
-//         }
-//         res.send({tasks: all_Done_tasks });
-//
-//     });
-// });
 
 module.exports = router;

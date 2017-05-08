@@ -135,14 +135,25 @@ function addNewTask_AjaxCall(task)
         data: { "name" : task } //sends tasks to the /add route to add data to the database;
     }).done(function(data) // data has the  database with new data added;
     {
-        console.log("I am the data " + JSON.stringify(data));
 
-        console.log('POST complete');
+        if(data === "Duplicate Entry")
+        {
+            alert("Task already exists !!");
+            $('#new_task_text').val('');
+            $('#new_task_button').css({'outline': 'none'});
 
-        $('#new_task_text').val('');        // Clear input text box
+        }
+        else {
+            console.log("I am the data " + JSON.stringify(data));
 
-        var task_list = $('#task_list'); // to display the task lists in the new div
-        add_task_to_webPage(data, task_list); // add task on the web-page dynamically(line-41)
+            console.log('POST complete');
+
+            $('#new_task_text').val('');        // Clear input text box
+
+
+            var task_list = $('#task_list'); // to display the task lists in the new div
+            add_task_to_webPage(data, task_list); // add task on the web-page dynamically(line-41)
+        }
     }).fail(function(error){
         console.log('POST Error');
         console.log(error);
@@ -206,20 +217,27 @@ function done_task_Ajax(id)
 
 function mark_all_done_task_Ajax()
 {
-    $.ajax({
-        method: "POST",
-        url: "/markedalldone"// sends id to /delete route in index.js
-    }).done(function (data) // data has the result after deleting the task;
+    var task_list = $('#task_list');
+    if(task_list.length > 0)
     {
-        document.open(data);
-        document.write(data);
-        document.close(data);
+        $.ajax({
+            method: "POST",
+            url: "/markedalldone"// sends id to /delete route in index.js
+        }).done(function (data) // data has the result after deleting the task;
+        {
+            document.open(data);
+            document.write(data);
+            document.close(data);
 
-        alert( "All tasks Have been moved to done task list !!")
-    }).fail(function (error) {
-        console.log('done error');
-        console.log(error);
-    });
+            alert("All tasks Have been moved to done task list !!")
+        }).fail(function (error) {
+            console.log('done error');
+            console.log(error);
+        });
+    }
+    else {
+        alert("Nothing to move !!! ")
+    }
 }
 function AddCompletedTaskAsNewTask_AjaxCall(id)
 {

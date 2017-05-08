@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var flash = require('express-flash');
+var session = require('express-session');
+
 
 var index = require('./routes/index');
 var assert = require('assert');
@@ -35,6 +37,8 @@ app.set('views', path.join(__dirname, 'views'));
     app.use(express.static(path.join(__dirname, 'public')));
 
     app.use('/users', users);
+app.use(session({secret:'top secret key'}));
+app.use(flash());
 // add app.use() call to add the db to each request
 
     app.use('/', index);
