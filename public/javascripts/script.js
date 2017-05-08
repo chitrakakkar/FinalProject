@@ -54,8 +54,8 @@ function addTasksToPage(tasks)
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
-    new_task_counter++
-    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="' + task._id + '" class="taskName">' + new_task_counter + ". " + task.name+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
+    new_task_counter++;
+    var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="counter">' + new_task_counter+ "."+ '</span><span id="' + task._id + '" class="taskName">' + task.name+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
 
     $("button.delete" , task).click(function ()
     {
@@ -127,6 +127,8 @@ function getAllTasks()
 //adds new task-gets info from index.js-/add router
 function addNewTask_AjaxCall(task)
 {
+    if(task.length>0)
+    {
     $.ajax({
         method:"POST",
         url:"/add",
@@ -144,7 +146,10 @@ function addNewTask_AjaxCall(task)
     }).fail(function(error){
         console.log('POST Error');
         console.log(error);
-    });
+    });}
+    else {
+        alert("Empty string not allowed !")
+    }
 
 }
 

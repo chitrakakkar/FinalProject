@@ -10,6 +10,9 @@ body
 
 
 }
+#counter{
+  margin-left: 50px;
+}
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor
 {
   background-color: lightsteelblue;
@@ -52,7 +55,7 @@ h1
 }
 .delete
 {
-  margin-left: 150px;
+  margin-left: 80px;
   background-color: whitesmoke;
 }
 .task-list{
@@ -61,6 +64,7 @@ h1
 .taskName
 {
   margin-left: 80px;
+  width: 40px;
 }
 p{
   color: black;
@@ -77,11 +81,7 @@ p{
   margin-left: 160px;
   background-color: whitesmoke;
 }
-/*a*/
-/*{*/
-  /*text-decoration: none;*/
-  /*color: orangered;*/
-/*}*/
+
 #new_task_button{
   background-color: whitesmoke;
 
