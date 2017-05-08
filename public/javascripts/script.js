@@ -218,26 +218,32 @@ function done_task_Ajax(id)
 function mark_all_done_task_Ajax()
 {
     var task_list = $('#task_list');
-    if(task_list.length > 0)
+    if (task_list.length > 0)
     {
         $.ajax({
             method: "POST",
             url: "/markedalldone"// sends id to /delete route in index.js
         }).done(function (data) // data has the result after deleting the task;
         {
-            document.open(data);
-            document.write(data);
-            document.close(data);
+            // document.open(data);
+            // document.write(data);
+            // document.close(data);
+            task_list.splice(0,task_list.length);
+            task_list.remove();
+            getAllTasks();
+            $('#mark_all_done__button').css({'outline': 'none'});
 
             alert("All tasks Have been moved to done task list !!")
-        }).fail(function (error) {
-            console.log('done error');
-            console.log(error);
-        });
+            }).fail(function (error) {
+                console.log('done error');
+                console.log(error);
+            });
     }
-    else {
-        alert("Nothing to move !!! ")
-    }
+    else
+        {
+            alert("Nothing to move !!! ")
+        }
+
 }
 function AddCompletedTaskAsNewTask_AjaxCall(id)
 {
@@ -255,7 +261,7 @@ function AddCompletedTaskAsNewTask_AjaxCall(id)
         var task_list = $('#task_list'); // to display the task lists in the new div
         add_task_to_webPage(data, task_list);
         // add_task_to_webPage();
-        // addNewTaskForm();  //Once page is loaded, enable form
+        //addNewTaskForm();  //Once page is loaded, enable form
         alert( data.name + " task has been moved to the new task list !!")
     }).fail(function (error) {
         console.log('done error');

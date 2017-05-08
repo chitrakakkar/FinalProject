@@ -107,13 +107,14 @@ router.post('/markedalldone', function(req, res, next)
 {
     console.log("Mark all done req.body");
 
-    Task.update( {done:false}, {done:true}, {multi:true}, function(err, tasks){
+    Task.update( {done:false}, {done:true}, {multi:true}, function(err, tasks)
+    {
 
         if (err)
         {
             return next(err);
         }
-        res.redirect('/')
+        res.redirect('/');
 
     });
 });
