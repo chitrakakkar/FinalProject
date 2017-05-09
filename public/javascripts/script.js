@@ -101,7 +101,7 @@ function addCompletedTasksToPage(CompletedTasks)
 function  Add_CompletedTask_to_Webpage(Completed_task, Completed_task_list)
 {
     var done_task_Counter=$(".Completed_task-list").length;
-    var Completed_task =  $('<div id="' + Completed_task._id + '" class="Completed_task-list"><button id="' + Completed_task._id + '" class="Add">Add</button><span id="' + Completed_task._id + '" class="taskName">' + done_task_Counter+ ". " + Completed_task.name+ '</span><button id="' + Completed_task._id + '" class="delete">Delete</button></div><br>');
+    var Completed_task =  $('<div id="' + Completed_task._id + '" class="Completed_task-list"><button id="' + Completed_task._id + '" class="Add">Add</button><span id="' + Completed_task._id + '" class="CompletedtaskName">' + done_task_Counter+ ". " + Completed_task.name+ '</span><button id="' + Completed_task._id + '" class="delete">Delete</button></div><br>');
     done_task_Counter++;
     Completed_task_list.append(Completed_task);
 

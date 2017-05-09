@@ -17,11 +17,13 @@ body
 }
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor
 {
-  background-color: lightsteelblue;
+  background-color: darkmagenta;
+    color: white;
 }
 .ui-tabs .ui-tabs-nav
 {
   background-color: darkmagenta;
+
 }
 
 .taskName > form
@@ -30,7 +32,7 @@ body
 
 }
 #tabs{
-  background-color: white;
+  background-color: darkmagenta;
 }
 #full-body
 {
@@ -67,6 +69,7 @@ h1
 {
   margin-left: 80px;
   width: 40px;
+  color: green;
 }
 /*p{*/
   /*color: black;*/
@@ -91,7 +94,9 @@ h1
   border-color: darkmagenta;
 
 }
-
+.h4.title{
+    text-decoration: none;
+}
 li{
   list-style: none;
 }
@@ -114,7 +119,7 @@ li{
   line-height: 0px;
   margin: 0px 8px;
 }
-#add_new_task, #Completed_task_list,#about
+#add_new_task, #Completed_task,#about
 {
   background-color: lightsteelblue;
 }
@@ -123,12 +128,18 @@ li{
   background-color: whitesmoke;
   border-color: darkmagenta;
 }
-#Completed_task_list
-{
-  text-decoration:line-through ;
-  color: darkred;
+h4.title{
+    text-decoration: none;
 }
-#task_list
+/*#Completed_task_list*/
+/*{*/
+  /*text-decoration:line-through ;*/
+
+/*}*/
+.CompletedtaskName
 {
- text-decoration: green;
+    text-decoration:line-through ;
+    margin-left: 80px;
+    width: 40px;
+    color: darkred;
 }
