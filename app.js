@@ -16,13 +16,12 @@ var users = require('./routes/users');
 
 
 //var mongo_pw = process.env.Mongo_PW;
-var url = 'mongodb://localhost:27017/Tasks';
+//var url = 'mongodb://localhost:27017/Tasks';
+var url = process.env.MONGO_URL;
 mongoose.connect(url);
 
 
 var app = express();
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

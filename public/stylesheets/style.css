@@ -2,14 +2,16 @@
 * {
   font-size:20px;
 }
+
+p{
+  color: black;
+}
 body
 {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-
-
-
 }
+
 #counter{
   margin-left: 50px;
 }
@@ -66,24 +68,27 @@ h1
   margin-left: 80px;
   width: 40px;
 }
-p{
-  color: black;
-}
+/*p{*/
+  /*color: black;*/
+/*}*/
 
 #new_task_text
 {
 
   width:450px;
   margin-left: 160px;
+  border-color: darkmagenta;
 }
 #mark_all_done__button
 {
   margin-left: 160px;
   background-color: whitesmoke;
+  border-color: darkmagenta;
 }
 
 #new_task_button{
   background-color: whitesmoke;
+  border-color: darkmagenta;
 
 }
 
@@ -108,4 +113,22 @@ li{
   font-size: 0px;
   line-height: 0px;
   margin: 0px 8px;
+}
+#add_new_task, #Completed_task_list,#about
+{
+  background-color: lightsteelblue;
+}
+.Done,.delete,.Add
+{
+  background-color: whitesmoke;
+  border-color: darkmagenta;
+}
+#Completed_task_list
+{
+  text-decoration:line-through ;
+  color: darkred;
+}
+#task_list
+{
+ text-decoration: green;
 }
