@@ -3,10 +3,10 @@ $(function()
 {
 
     // $("head").append('<script type="text/javascript" src="/javascripts/jquery.jeditable.js"></script>');
-    // Add a listener for input text; listen for Enter key.
+
     // Send POST request to create new task
     getAllTasks(); // calls /all url in index.js and displays all the data;line 92 on this page;
-    mark_all_done()
+    mark_all_done();// triggers mark_all_done task function;
 });
 function addNewTaskForm()
 {
@@ -15,6 +15,7 @@ function addNewTaskForm()
         var Task_name = $("#new_task_text").val();
         addNewTask_AjaxCall(Task_name);
     });
+    // check if enter is pressed to add new task; triggers #new_task_button function;
     $('#new_task_text').keypress(function (e) {
 
         if(e.which == 13)  // the enter key code
@@ -60,9 +61,11 @@ function addTasksToPage(tasks)
 //dynamically creating html element for the task-list
 function add_task_to_webPage(task, task_list)
 {
-    var new_task_counter= $(".task-list").length;
+    var new_task_counter= $(".task-list").length; // gives number of items in the div created below;
+    //dynamically creating html elements;New tasks;
     var task =  $('<div id="' + task._id + '" class="task-list"><button id="' + task._id + '" class="Done">Done</button><span id="counter">' + new_task_counter+ "."+ '</span><span id="' + task._id + '" class="taskName">' + task.name+ '</span><button id="' + task._id + '" class="delete">Delete</button></div><br>');
 
+    // triggers button click, editable and done task functionality;
     $("button.delete" , task).click(function ()
     {
         delete_Task_Ajax($(this).attr('id'));
@@ -84,6 +87,7 @@ function add_task_to_webPage(task, task_list)
     task_list.append(task);
 
 }
+// similar to new task;this is completed task list;
 function addCompletedTasksToPage(CompletedTasks)
 {
     var Completed_task_list=$('#Completed_task_list');
@@ -93,6 +97,7 @@ function addCompletedTasksToPage(CompletedTasks)
     }
 
 }
+// adds the completed task on to completed task div;
 function  Add_CompletedTask_to_Webpage(Completed_task, Completed_task_list)
 {
     var done_task_Counter=$(".Completed_task-list").length;
@@ -100,6 +105,7 @@ function  Add_CompletedTask_to_Webpage(Completed_task, Completed_task_list)
     done_task_Counter++;
     Completed_task_list.append(Completed_task);
 
+    // delete and add back to the list functinality for completed task div;
     $("button.delete" , Completed_task).click(function ()
     {
         delete_Task_Ajax($(this).attr('id'));
@@ -135,6 +141,7 @@ function getAllTasks()
 //adds new task-gets info from index.js-/add router
 function addNewTask_AjaxCall(task)
 {
+    //add button validation
     if(task.length >0)
     {
     $.ajax({
@@ -144,6 +151,7 @@ function addNewTask_AjaxCall(task)
     }).done(function(data) // data has the  database with new data added;
     {
 
+        // check for duplicate item for the to do task;
         if(data === "Duplicate Entry")
         {
             alert("Task already exists !!");
@@ -169,13 +177,14 @@ function addNewTask_AjaxCall(task)
     else {
 
         alert("Empty string not allowed !");
-        $('#new_task_button').css({'outline': 'none'});
+        $('#new_task_button').css({'outline': 'none'}); // removes button highlight
     }
 
 }
-
+// delete ajax;calls /delete in index.js and gets the updated data(in data field) from the database;
 function delete_Task_Ajax(id)
 {
+    // delete confirmation message on client side;
     if(confirm('Are you sure you want to delete?'))
     {
     $.ajax({
@@ -203,7 +212,7 @@ function delete_Task_Ajax(id)
         alert("delete cancelled !!! ")
     }
 }
-
+// done ajax;calls /done in index.js and gets the updated data(in data field) from the database;
 function done_task_Ajax(id)
 {
     var task_list = $('#task_list');
@@ -211,12 +220,13 @@ function done_task_Ajax(id)
         method: "POST",
         url: "/done",
         data: { "id": id }  // sends id to /delete route in index.js
-    }).done(function (data) // data has the result after deleting the task;
+    }).done(function (data) // data has the result after moving the task;
     {
         alert(data.name + " Has been moved to done task list !!");
         var Completed_task_list=$('#Completed_task_list');
         Add_CompletedTask_to_Webpage(data, Completed_task_list);
         var div_id = '#' + id + "";
+        // removes the new task from new task page;
         $(div_id).fadeOut(function () {
             $(this).remove();
         });
@@ -225,7 +235,7 @@ function done_task_Ajax(id)
         console.log(error);
     });
 }
-
+// mark all done ajax;calls /markedalldone in index.js and gets the updated data(in data field) from the database;
 function mark_all_done_task_Ajax()
 {
 
@@ -234,7 +244,7 @@ function mark_all_done_task_Ajax()
         $.ajax({
             method: "POST",
             url: "/markedalldone"// sends id to /delete route in index.js
-        }).done(function (data) // data has the result after deleting the task;
+        }).done(function (data) // data has the result after moving the task;
         {
             // document.open(data);
             // document.write(data);
@@ -242,6 +252,7 @@ function mark_all_done_task_Ajax()
 
             // task_list.remove();
             // task_list.splice(0,task_list.length);
+            //empty both the list so that it updates new items on the page;
             $('#task_list').empty();
             $('#Completed_task_list').empty();
             getAllTasks();
@@ -259,13 +270,14 @@ function mark_all_done_task_Ajax()
         }
 
 }
+// add done task as new ajax;calls /CompletedAsNew in index.js and gets the updated data(in data field) from the database;
 function AddCompletedTaskAsNewTask_AjaxCall(id)
 {
     $.ajax({
         method: "POST",
         url: "/CompletedAsNew",// sends id to /delete route in index.js
         data: { "id": id }
-    }).done(function (data) // data has the result after deleting the task;
+    }).done(function (data) // data has the result after moving the data;
     {
         console.log("Check data !", data);
         var div_id = '#' + id + "";

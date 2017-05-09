@@ -1,3 +1,4 @@
+// This file is used inside script.js for editing an existing task;
 /*
  * Jeditable - jQuery in place edit plugin
  *

@@ -22,11 +22,14 @@ router.get('/', function(req, res, next) {
 
 /* GET all items home page. */
 router.get('/all', function(req, res) {
-    Task.find({done: false}, function (err, taskDocs) {
+    Task.find({done: false}, function (err, taskDocs)
+    {
         if (err) {
             return next(err)
         }
-        else {
+        //to display both done and not done tasks on the page;
+        else
+            {
             Task.find({done: true}, function (err, doneTasks) {
                 if (err) {
                     return next(err)
@@ -38,18 +41,19 @@ router.get('/all', function(req, res) {
         }
     });
 });
-
+// Adds new tasks to the list on the new task div and to the database;
 router.post('/add', function(req, res, next)
 {
     console.log(req.body.name);
-    Task.findOne({name: req.body.name}, function (err, doc) {
+    Task.findOne({name: req.body.name}, function (err, doc)
+    {
         if (doc)
         {
-            res.send("Duplicate Entry")
+            res.send("Duplicate Entry"); // looking for duplicate entry
         }
         else {
             var task = Task({name: req.body.name, done: false});
-            task.save(function (err) {
+            task.save(function (err) {   // saves the items if does not exist
                 if (err) {
                     return next(err);
                 }
@@ -72,7 +76,7 @@ router.post('/delete', function (req, res, next)
         return res.json({'tasks': req.body, 'name':result.name} );
     });
 });
-
+// edits a task ;this uses jeditable.js
 router.post('/edit', function (req,res,next)
 {
     var query= req.body.id ;
@@ -102,7 +106,8 @@ router.post('/done', function (req, res,next )
     })
 
 });
-/* Mark all tasks as done. */
+/* Mark all tasks as doneon the new task list . */
+// tasks has number of items successfully updated;
 router.post('/markedalldone', function(req, res, next)
 {
     console.log("Mark all done req.body");
@@ -118,7 +123,7 @@ router.post('/markedalldone', function(req, res, next)
 
     });
 });
-
+// moves the completed task as new task back to the list;
 router.post('/CompletedAsNew', function (req, res,next )
 {
     console.log("ID", req.body.id);
