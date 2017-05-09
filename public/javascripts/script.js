@@ -1,4 +1,4 @@
-//var done_task_Counter=0;
+// this file takes care of the client side JS functionality;
 $(function()
 {
 
@@ -14,6 +14,13 @@ function addNewTaskForm()
     {
         var Task_name = $("#new_task_text").val();
         addNewTask_AjaxCall(Task_name);
+    });
+    $('#new_task_text').keypress(function (e) {
+
+        if(e.which == 13)  // the enter key code
+        {
+            $('#new_task_button').click();
+        }
     });
 }
 
