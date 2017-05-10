@@ -33,6 +33,7 @@ body
 }
 #tabs{
   background-color: darkmagenta;
+
 }
 #full-body
 {
@@ -131,11 +132,6 @@ li{
 h4.title{
     text-decoration: none;
 }
-/*#Completed_task_list*/
-/*{*/
-  /*text-decoration:line-through ;*/
-
-/*}*/
 .CompletedtaskName
 {
     text-decoration:line-through ;

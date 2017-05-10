@@ -5,6 +5,7 @@ $(function()
     // $("head").append('<script type="text/javascript" src="/javascripts/jquery.jeditable.js"></script>');
 
     // Send POST request to create new task
+    addNewTaskForm();
     getAllTasks(); // calls /all url in index.js and displays all the data;line 92 on this page;
     mark_all_done();// triggers mark_all_done task function;
 });
@@ -130,7 +131,7 @@ function getAllTasks()
     {
         //Build HTML for each task in list
         addTasksToPage(data.tasks);
-        addNewTaskForm();  //Once page is loaded, enable form
+        //addNewTaskForm();  //Once page is loaded, enable form
         addCompletedTasksToPage(data.doneTasks);
 
     }).fail(function(error){
