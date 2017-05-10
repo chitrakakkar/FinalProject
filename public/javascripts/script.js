@@ -9,6 +9,7 @@ $(function()
     getAllTasks(); // calls /all url in index.js and displays all the data;line 92 on this page;
     mark_all_done();// triggers mark_all_done task function;
 });
+//add new task
 function addNewTaskForm()
 {
     $("#new_task_button").click(function(event)
