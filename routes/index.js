@@ -86,7 +86,7 @@ router.post('/edit', function (req,res,next)
         if (err) {
             return next(new Error('Unable to update the task: ' + tasksTOBeUpdated.name));
         }
-        res.json(req.body.name);
+        res.send(req.body.name);
 
     });
 });
